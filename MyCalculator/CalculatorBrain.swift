@@ -19,9 +19,8 @@ struct CalculatorBrain {
         case equals
     }
     
-    var resultIsPending = false
+    //var resultIsPending = false
     var descriptionOfMathSequence: String?
-    var temporaryAccumlator: Double?
     
     //Mathematical operations that can be performed by calculator
     private var operations : Dictionary<String, Operation> = [
@@ -41,6 +40,8 @@ struct CalculatorBrain {
     "mod" : Operation.binaryOperation({ $0.truncatingRemainder(dividingBy: $1) }),
     "=" : Operation.equals
     ]
+    
+    //Cannot remove for assignment
     mutating func performOperation(_ symbol: String) {
         if let operation = operations[symbol] {
             
@@ -82,11 +83,12 @@ struct CalculatorBrain {
                 if accumlator != nil && accumlator != 0.0 {
                     pendingBinaryOperation = PendingBinaryOperation(function: function, firstOperand: accumlator!)
                     accumlator = nil
-                    resultIsPending = true
+                    //resultIsPending = true
                     
                 }
             case .equals:
                 performPendingBinaryOperation()
+            //default: break
             }
         }
     }
@@ -97,10 +99,11 @@ struct CalculatorBrain {
         if pendingBinaryOperation != nil && accumlator != nil {
             accumlator = pendingBinaryOperation!.perform(with: accumlator!)
             pendingBinaryOperation = nil
-            resultIsPending = false
+            //resultIsPending = false
         }
     }
     
+    //This is my extra function so do not remove.  May want to make it static.
     //Formatting as integer if no decimal and to six places if there is a decimal.
     func formatMyNumber(number: Double) -> String {
         let formattedNumber = NumberFormatter()
@@ -128,6 +131,7 @@ struct CalculatorBrain {
         }
     }
     
+    //Cannot remove for assignment
     mutating func setOperand(_ operand: Double) {
         accumlator = operand
         
@@ -139,10 +143,20 @@ struct CalculatorBrain {
         }
         
     }
+    mutating func setOperand(variable: String) {
+        
+    }
     
+    //Cannot remove for assignment
     var result: Double? {
         get {
             return accumlator
+        }
+    }
+    
+    var resultIsPending: Bool {
+        get {
+            return nil != pendingBinaryOperation
         }
     }
 }

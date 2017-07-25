@@ -38,7 +38,7 @@ class ViewController: UIViewController {
                 haveADecimalPoint = true
             }
             else if haveADecimalPoint && digit == "." {
-                
+               //Do nothing because this is a second decimal point on the same operand
             }
             else {
                 display.text = textCurrentlyInDisplay + digit
@@ -61,6 +61,7 @@ class ViewController: UIViewController {
     @IBAction func performOperation(_ sender: UIButton) {
         if userIsInTheMiddleOfTyping {
             calculatorBrain.setOperand(displayValue)
+            calculatorBrain.setOperand(variable: "X")
             sequenceOfOperationsDisplay.text = calculatorBrain.descriptionOfMathSequence
             userIsInTheMiddleOfTyping = false
             haveADecimalPoint = false
