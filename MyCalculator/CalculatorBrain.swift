@@ -10,12 +10,16 @@ import Foundation
 
 struct CalculatorBrain {
     
-    private var accumlator: Double?
+    private var accumlator: (Double, String)?
+    private var calledEquals = false
+    private var calledBinaryOperation = false
+    private var arrayOfOperationsAndOperands: [String] = []
     
     private enum Operation {
+        case clear
         case constant(Double)
-        case unaryOperation((Double) -> Double)
-        case binaryOperation((Double, Double) -> Double)
+        case unaryOperation((Double) -> Double, (String)  -> String)
+        case binaryOperation((Double, Double) -> Double, (String, String) -> String)
         case equals
     }
     
@@ -24,66 +28,46 @@ struct CalculatorBrain {
     
     //Mathematical operations that can be performed by calculator
     private var operations : Dictionary<String, Operation> = [
+    "C" : Operation.clear,
     "π" : Operation.constant(Double.pi),
     "e" : Operation.constant(M_E),
-    "C" : Operation.constant(0),
-    "√" : Operation.unaryOperation(sqrt),
-    "cos" : Operation.unaryOperation(cos),
-    "sin" : Operation.unaryOperation(sin),
-    "±" : Operation.unaryOperation({ -$0 }),
-    "x²" : Operation.unaryOperation({ $0 * $0 }),
-    "×" : Operation.binaryOperation({ $0 * $1 }),
-    "÷" : Operation.binaryOperation({ $0 / $1 }),
-    "+" : Operation.binaryOperation({ $0 + $1 }),
-    "−" : Operation.binaryOperation({ $0 - $1 }),
-    "x^y" : Operation.binaryOperation({ pow($0, $1) }),
-    "mod" : Operation.binaryOperation({ $0.truncatingRemainder(dividingBy: $1) }),
+    "√" : Operation.unaryOperation(sqrt, { "√(" + $0 + ")" }),
+    "cos" : Operation.unaryOperation(cos, { "cos(" + $0 + ")" }),
+    "sin" : Operation.unaryOperation(sin, { "sin(" + $0 + ")" }),
+    "±" : Operation.unaryOperation({ -$0 }, { "-(" + $0 + ")" }),
+    "x²" : Operation.unaryOperation({ pow($0, 2) }, { "(" + $0 + ")²" }),
+    "×" : Operation.binaryOperation(*, { $0 + "×" + $1 }),
+    "÷" : Operation.binaryOperation(/, { $0 + "÷" + $1 }),
+    "+" : Operation.binaryOperation(+, { $0 + "+" + $1 }),
+    "−" : Operation.binaryOperation(-, { $0 + "-" + $1 }),
+    "xʸ" : Operation.binaryOperation({ pow($0, $1) }, { $0 + "^" + $1 }),
+    "mod" : Operation.binaryOperation({ $0.truncatingRemainder(dividingBy: $1) }, { "(" + $0 + ")mod" + $1 }),
     "=" : Operation.equals
     ]
     
     //Cannot remove for assignment
     mutating func performOperation(_ symbol: String) {
         if let operation = operations[symbol] {
-            
-            //Update descriptionOfMathSequence
-            if symbol == "C" {
-                descriptionOfMathSequence = ""
-            }
-            else if descriptionOfMathSequence != nil && accumlator != nil && descriptionOfMathSequence != "" {
-                
-                /*Properly format special operators for display in descriptionOfMathSequence*/
-                    switch symbol {
-                    case "x²" :
-                        descriptionOfMathSequence = "\(descriptionOfMathSequence!) ^ 2"
-                    case "x^y" :
-                        descriptionOfMathSequence = "\(descriptionOfMathSequence!) ^"
-                    case "±" :
-                        descriptionOfMathSequence = "- (\(descriptionOfMathSequence!))"
-                    case "√" :
-                        descriptionOfMathSequence = "√ (\(descriptionOfMathSequence!))"
-                    case "cos" :
-                        descriptionOfMathSequence = "cos(\(descriptionOfMathSequence!))"
-                    case "sin" :
-                        descriptionOfMathSequence = "sin(\(descriptionOfMathSequence!))"
-                    case "=" : break
-                    default :
-                        descriptionOfMathSequence = descriptionOfMathSequence! + " " + symbol
-
-                    }
-            }
-            
             switch operation {
+            case .clear:
+                accumlator = (0, "C")
+                pendingBinaryOperation = nil //reset pendingBinaryOperation
             case .constant(let value):
-                accumlator = value
-            case .unaryOperation(let function):
+                accumlator = (value, symbol)
+            case .unaryOperation(let function, let description):
+                performPendingBinaryOperation()
                 if accumlator != nil {
-                    accumlator = function(accumlator!)
+                    accumlator = (function(accumlator!.0), description(accumlator!.1))
                 }
-            case .binaryOperation(let function):
-                if accumlator != nil && accumlator != 0.0 {
-                    pendingBinaryOperation = PendingBinaryOperation(function: function, firstOperand: accumlator!)
+            case .binaryOperation(let function, let description):
+                if !calledEquals {
+                    calledBinaryOperation = true
+                }
+                performPendingBinaryOperation()
+                if accumlator != nil {
+                    
+                    pendingBinaryOperation = PendingBinaryOperation(function: function, description: description, firstOperand: (accumlator!.0, accumlator!.1))
                     accumlator = nil
-                    //resultIsPending = true
                     
                 }
             case .equals:
@@ -97,25 +81,27 @@ struct CalculatorBrain {
     
     private mutating func performPendingBinaryOperation() {
         if pendingBinaryOperation != nil && accumlator != nil {
-            accumlator = pendingBinaryOperation!.perform(with: accumlator!)
+            accumlator = pendingBinaryOperation!.perform(with: (accumlator!.0, CalculatorBrain.formatMyNumber(number: accumlator!.0)!))
             pendingBinaryOperation = nil
-            //resultIsPending = false
         }
     }
-    
-    //This is my extra function so do not remove.  May want to make it static.
-    //Formatting as integer if no decimal and to six places if there is a decimal.
-    func formatMyNumber(number: Double) -> String {
+    //Static function for formatting as integer if no decimal and to six places if there is a decimal.
+    static func formatMyNumber(number: Double?) -> String? {
         let formattedNumber = NumberFormatter()
-        var stringNumberToReturn: String
+        var stringNumberToReturn: String?
         
-        if number.truncatingRemainder(dividingBy: 1) == 0 {
-            formattedNumber.maximumFractionDigits = 0
-            stringNumberToReturn = formattedNumber.string(for: number)!
+        if number != nil {
+            if number?.truncatingRemainder(dividingBy: 1) == 0 {
+                formattedNumber.maximumFractionDigits = 0
+                stringNumberToReturn = formattedNumber.string(for: number)!
+            }
+            else {
+                formattedNumber.maximumFractionDigits = 6
+                stringNumberToReturn = formattedNumber.string(for: number)!
+            }
         }
         else {
-            formattedNumber.maximumFractionDigits = 6
-            stringNumberToReturn = formattedNumber.string(for: number)!
+            stringNumberToReturn = nil
         }
         
         return stringNumberToReturn
@@ -124,39 +110,54 @@ struct CalculatorBrain {
     
     private struct  PendingBinaryOperation {
         let function: (Double, Double) -> Double
-        let firstOperand: Double
+        let description: (String, String) -> String
+        let firstOperand: (Double, String)
         
-        func perform(with secondOperand: Double) -> Double {
-            return function(firstOperand, secondOperand)
+        func perform(with secondOperand: (Double, String)) -> (Double, String) {
+            return (function(firstOperand.0, secondOperand.0), description(firstOperand.1, secondOperand.1))
         }
     }
     
-    //Cannot remove for assignment
     mutating func setOperand(_ operand: Double) {
-        accumlator = operand
-        
-        if descriptionOfMathSequence != nil {
-            descriptionOfMathSequence = descriptionOfMathSequence! + " " + formatMyNumber(number: operand)
-        }
-        else {
-            descriptionOfMathSequence = formatMyNumber(number: operand)
-        }
-        
+        accumlator = (operand, CalculatorBrain.formatMyNumber(number: operand)!)
     }
     mutating func setOperand(variable: String) {
         
     }
     
-    //Cannot remove for assignment
     var result: Double? {
         get {
-            return accumlator
+            if accumlator != nil {
+              return accumlator!.0
+            }
+            else {
+                return nil
+            }
         }
     }
     
     var resultIsPending: Bool {
         get {
-            return nil != pendingBinaryOperation
+            return pendingBinaryOperation != nil
+        }
+    }
+    
+    var description: String? {
+        mutating get {
+            var stringToReturn: String?
+            
+            if accumlator?.1 == "C" {
+                stringToReturn = nil
+                accumlator = nil
+            }
+            else if resultIsPending {
+                stringToReturn = pendingBinaryOperation!.description(pendingBinaryOperation!.firstOperand.1, CalculatorBrain.formatMyNumber(number: (accumlator?.0)) ?? "")
+            }
+            else {
+                stringToReturn = accumlator?.1
+            }
+            
+            return stringToReturn
         }
     }
 }

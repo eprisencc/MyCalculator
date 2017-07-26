@@ -22,7 +22,7 @@ class ViewController: UIViewController {
             return Double(display.text!)!
         }
         set {
-            display.text = String(newValue)
+            display.text = CalculatorBrain.formatMyNumber(number: newValue)
         }
     }
 
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         else {
             display.text = digit
             if resultHasBeenDisplayed {
-                sequenceOfOperationsDisplay.text = calculatorBrain.descriptionOfMathSequence
+                sequenceOfOperationsDisplay.text = calculatorBrain.description
                 resultHasBeenDisplayed = false
             }
             userIsInTheMiddleOfTyping = true
@@ -61,37 +61,24 @@ class ViewController: UIViewController {
     @IBAction func performOperation(_ sender: UIButton) {
         if userIsInTheMiddleOfTyping {
             calculatorBrain.setOperand(displayValue)
-            calculatorBrain.setOperand(variable: "X")
-            sequenceOfOperationsDisplay.text = calculatorBrain.descriptionOfMathSequence
             userIsInTheMiddleOfTyping = false
             haveADecimalPoint = false
         }
         
-        /*If result has been displayed remove = sign from end of sequenceOfOperationsDisplay otherwise keep unary operation in display*/
-        if resultHasBeenDisplayed {
-            if let previousSequenceOfOperationsDisplay = sequenceOfOperationsDisplay.text {
-                if previousSequenceOfOperationsDisplay.hasSuffix("=") {
-                    let endIndex = previousSequenceOfOperationsDisplay.index(previousSequenceOfOperationsDisplay.endIndex, offsetBy: -2)
-                    calculatorBrain.descriptionOfMathSequence = previousSequenceOfOperationsDisplay.substring(to: endIndex)
-                }
-                else {
-                    calculatorBrain.descriptionOfMathSequence = previousSequenceOfOperationsDisplay
-                }
-            }
-        }
-        
         if let mathematicalSymbol = sender.currentTitle {
-            calculatorBrain.performOperation("=")
-            
             calculatorBrain.performOperation(mathematicalSymbol)
-            sequenceOfOperationsDisplay.text = calculatorBrain.descriptionOfMathSequence
         }
         
-        //Display result and reset descriptionOfMathSequence
         if let result = calculatorBrain.result {
-            display.text = calculatorBrain.formatMyNumber(number: result)
-            calculatorBrain.descriptionOfMathSequence = nil
+            displayValue = result
             resultHasBeenDisplayed = true
+        }
+        
+        if let description = calculatorBrain.description {
+            sequenceOfOperationsDisplay.text = description
+        }
+        else {
+            sequenceOfOperationsDisplay.text = ""
         }
     }
 }
