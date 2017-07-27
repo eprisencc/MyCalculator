@@ -74,7 +74,7 @@ class ViewController: UIViewController {
     @IBAction func backSpace(_ sender: UIButton) {
         var textToBackSpace: String = display.text!
         
-        if textToBackSpace != "0" {
+        if textToBackSpace != "0" && !resultHasBeenDisplayed {
             var charactersToBackSpace = Array(textToBackSpace.characters)
             
             if charactersToBackSpace.count > 1 {
