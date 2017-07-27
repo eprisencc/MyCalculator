@@ -19,18 +19,28 @@ class ViewController: UIViewController {
     private var calculatorBrain = CalculatorBrain()
     var displayValue: Double {
         get {
-            return Double(display.text!)!
+            return Double(display.text!) ?? 0  //?? is when a decimal is entered and then hit C
         }
         set {
             display.text = CalculatorBrain.formatMyNumber(number: newValue)
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     @IBAction func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
         
         if userIsInTheMiddleOfTyping {
-            let textCurrentlyInDisplay = display.text!
+            var textCurrentlyInDisplay: String
+            if display.text == "0" {
+               textCurrentlyInDisplay = ""
+            }
+            else {
+                textCurrentlyInDisplay = display.text!
+            }
             
             //Only allow one decimal point in the display
             if !haveADecimalPoint && digit == "." {
@@ -52,11 +62,33 @@ class ViewController: UIViewController {
             }
             userIsInTheMiddleOfTyping = true
             if digit == "." {
+                display.text = "0\(digit)"
                 haveADecimalPoint = true
+            }
+            else {
+                display.text = digit
             }
         }
     }
     
+    @IBAction func backSpace(_ sender: UIButton) {
+        var textToBackSpace: String = display.text!
+        
+        if textToBackSpace != "0" {
+            var charactersToBackSpace = Array(textToBackSpace.characters)
+            
+            if charactersToBackSpace.count > 1 {
+                charactersToBackSpace.removeLast()
+                textToBackSpace = String(charactersToBackSpace)
+            }
+            else {
+                textToBackSpace = "0"
+            }
+            
+        }
+        
+        display.text = textToBackSpace
+    }
 
     @IBAction func performOperation(_ sender: UIButton) {
         if userIsInTheMiddleOfTyping {
