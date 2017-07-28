@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     var haveADecimalPoint = false
     var resultHasBeenDisplayed = false
     private var calculatorBrain = CalculatorBrain()
+    private var variables: Dictionary<String, Double>?
+    
     var displayValue: Double {
         get {
             return Double(display.text!) ?? 0  //?? is when a decimal is entered and then hit C
@@ -42,13 +44,13 @@ class ViewController: UIViewController {
                 textCurrentlyInDisplay = display.text!
             }
             
-            //Only allow one decimal point in the display
+            //Only allow one decimal point in the display.
             if !haveADecimalPoint && digit == "." {
                 display.text = textCurrentlyInDisplay + digit
                 haveADecimalPoint = true
             }
             else if haveADecimalPoint && digit == "." {
-               //Do nothing because this is a second decimal point on the same operand
+            //Do nothing because this is a second decimal point on the same operand.
             }
             else {
                 display.text = textCurrentlyInDisplay + digit
@@ -57,10 +59,12 @@ class ViewController: UIViewController {
         else {
             display.text = digit
             if resultHasBeenDisplayed {
-                sequenceOfOperationsDisplay.text = calculatorBrain.description
+                sequenceOfOperationsDisplay.text = calculatorBrain.evaluate(using: variables).descripton + (calculatorBrain.evaluate(using: variables).isPending ? "..." : "=")
                 resultHasBeenDisplayed = false
             }
             userIsInTheMiddleOfTyping = true
+            
+            //If the first digit is a decimal point add a zero in front.
             if digit == "." {
                 display.text = "0\(digit)"
                 haveADecimalPoint = true
@@ -71,9 +75,58 @@ class ViewController: UIViewController {
         }
     }
     
+    private func displayResult() {
+        let evaluated = calculatorBrain.evaluate(using: variables)
+        
+        if let result = evaluated.result {
+            displayValue = result
+            resultHasBeenDisplayed = true
+        }
+        
+        if evaluated.descripton != "" {
+            sequenceOfOperationsDisplay.text = evaluated.descripton + (evaluated.isPending ? "..." : "=")
+        }
+        else {
+            sequenceOfOperationsDisplay.text = ""
+        }
+    }
+    
+    @IBAction func reset(_ sender: UIButton) {
+        calculatorBrain = CalculatorBrain()
+        userIsInTheMiddleOfTyping = false
+        haveADecimalPoint = false
+        resultHasBeenDisplayed = false
+        variables = Dictionary<String, Double>()
+        displayValue = 0
+        sequenceOfOperationsDisplay.text = ""
+    }
+    
+    var temporaryHoldForDisplay = ""
+    
+    @IBAction func storeToMemoryPressedDown(_ sender: UIButton) {
+        variables = ["M": displayValue]
+        temporaryHoldForDisplay = display.text ?? "0"
+        displayResult()
+        userIsInTheMiddleOfTyping = false
+        display.text = "STORED"
+    }
+    
+    @IBAction func storeToMemoryNoLongerPressed(_ sender: UIButton) {
+        display.text = temporaryHoldForDisplay
+        temporaryHoldForDisplay = ""
+    }
+    
+    
+    @IBAction func callMemory(_ sender: UIButton) {
+        calculatorBrain.setOperand(variable: sender.currentTitle!)
+        userIsInTheMiddleOfTyping = false
+        displayResult()
+    }
+    
     @IBAction func backSpace(_ sender: UIButton) {
         var textToBackSpace: String = display.text!
         
+        //Only allow backspacing when zero is not in the display and the display is not showing the results
         if textToBackSpace != "0" && !resultHasBeenDisplayed {
             var charactersToBackSpace = Array(textToBackSpace.characters)
             
@@ -101,17 +154,7 @@ class ViewController: UIViewController {
             calculatorBrain.performOperation(mathematicalSymbol)
         }
         
-        if let result = calculatorBrain.result {
-            displayValue = result
-            resultHasBeenDisplayed = true
-        }
-        
-        if let description = calculatorBrain.description {
-            sequenceOfOperationsDisplay.text = description
-        }
-        else {
-            sequenceOfOperationsDisplay.text = ""
-        }
+        displayResult()
     }
 }
 
