@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina5_5" orientation="landscape">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,11 +18,11 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="r3m-d2-JBb">
-                                <rect key="frame" x="0.0" y="2" width="736" height="48"/>
+                                <rect key="frame" x="0.0" y="2" width="414" height="48"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="ovQ-oo-sBY"/>
@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="zml-H4-NcU">
-                                <rect key="frame" x="0.0" y="50" width="736" height="48"/>
+                                <rect key="frame" x="0.0" y="50" width="414" height="48"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="RVn-l4-yR1"/>
@@ -916,11 +916,11 @@
                                 <include reference="fb5-yU-cek"/>
                                 <include reference="glr-dc-plx"/>
                                 <include reference="sdl-is-f26"/>
-                                <include reference="edy-FV-w5a"/>
-                                <exclude reference="xvj-Z1-CHi"/>
                                 <exclude reference="IlK-Fy-59o"/>
                                 <exclude reference="Xku-Wc-95t"/>
                                 <exclude reference="h53-br-VO3"/>
+                                <include reference="edy-FV-w5a"/>
+                                <exclude reference="xvj-Z1-CHi"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">

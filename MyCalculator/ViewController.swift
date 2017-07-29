@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     
     var displayValue: Double {
         get {
-            return Double(display.text!) ?? 0  //?? is when a decimal is entered and then hit C
+            return Double(display.text!) ?? 0
         }
         set {
             display.text = CalculatorBrain.formatMyNumber(number: newValue)
@@ -110,6 +110,7 @@ class ViewController: UIViewController {
     
     @IBAction func storeToMemoryPressedDown(_ sender: UIButton) {
         variables = ["M": displayValue]
+        //variables?["M"] = displayValue
         memoryButtonPortrait.setTitle("M=" + CalculatorBrain.formatMyNumber(number: displayValue)!, for: .normal)
         memoryButtonLandscape.setTitle("M=" + CalculatorBrain.formatMyNumber(number: displayValue)!, for: .normal)
         temporaryHoldForDisplay = display.text ?? "0"

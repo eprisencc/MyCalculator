@@ -19,7 +19,6 @@ struct CalculatorBrain {
     }
     
     private enum Operation {
-        case clear
         case constant(Double)
         case unaryOperation((Double) -> Double, (String)  -> String)
         case binaryOperation((Double, Double) -> Double, (String, String) -> String)
@@ -29,7 +28,6 @@ struct CalculatorBrain {
     
     //Mathematical operations that can be performed by calculator
     private var operations : Dictionary<String, Operation> = [
-    //"C" : Operation.clear,
     "π" : Operation.constant(Double.pi),
     "e" : Operation.constant(M_E),
     
@@ -152,7 +150,8 @@ struct CalculatorBrain {
         var description: String? {
             if pendingBinaryOperation != nil {
                 return pendingBinaryOperation!.description(pendingBinaryOperation!.firstOperand.1, accumulator?.1 ?? "")
-            } else {
+            }
+            else {
                 return accumulator?.1
             }
         }
@@ -166,8 +165,8 @@ struct CalculatorBrain {
                     switch operation {
                     case .constant(let value):
                         accumulator = (value, symbol)
-                    case .nullaryOperation(let randomNumberFunction, let descriptionOfRandomNumber):
-                        accumulator = (randomNumberFunction(), descriptionOfRandomNumber)
+                    case .nullaryOperation(let function, let description):
+                        accumulator = (function(), description)
                     case .unaryOperation(let function, let description):
                         if accumulator != nil {
                             accumulator = (function(accumulator!.0), description(accumulator!.1))
@@ -182,8 +181,6 @@ struct CalculatorBrain {
                         }
                     case .equals:
                         performPendingBinaryOperation()
-                    default:
-                        break
                     }
                 }
             case .variable(let symbol):
