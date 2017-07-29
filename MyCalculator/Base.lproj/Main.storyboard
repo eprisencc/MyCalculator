@@ -49,7 +49,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wpi-LQ-foQ">
                                                 <rect key="frame" x="0.0" y="0.0" width="104.33333333333333" height="62.333333333333343"/>
-                                                <color key="backgroundColor" red="1" green="0.9299700635" blue="0.04076129723" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.81298575129999995" green="0.76307351300000004" blue="0.037888924829999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                 <size key="titleShadowOffset" width="2" height="1"/>
                                                 <state key="normal" title="C">
@@ -62,7 +62,7 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nuc-su-h3t">
                                                 <rect key="frame" x="105.33333333333334" y="0.0" width="104.33333333333334" height="62.333333333333343"/>
-                                                <color key="backgroundColor" red="1" green="0.9299700635" blue="0.04076129723" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.81298575129999995" green="0.76307351300000004" blue="0.037888924829999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                 <size key="titleShadowOffset" width="2" height="1"/>
                                                 <state key="normal" title="CE">
@@ -527,7 +527,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VEK-KQ-EnU">
                                                 <rect key="frame" x="0.0" y="0.0" width="102.66666666666667" height="105.66666666666666"/>
-                                                <color key="backgroundColor" red="1" green="0.9299700635" blue="0.04076129723" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.81298575129533679" green="0.76307351298988435" blue="0.037888924832055922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                 <size key="titleShadowOffset" width="2" height="1"/>
                                                 <state key="normal" title="C">
@@ -540,7 +540,7 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Uz-xI-Lup">
                                                 <rect key="frame" x="103.66666666666666" y="0.0" width="102.99999999999997" height="105.66666666666666"/>
-                                                <color key="backgroundColor" red="1" green="0.9299700635" blue="0.04076129723" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.81298575129999995" green="0.76307351300000004" blue="0.037888924829999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                 <size key="titleShadowOffset" width="2" height="1"/>
                                                 <state key="normal" title="CE">
