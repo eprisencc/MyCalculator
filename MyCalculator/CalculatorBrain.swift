@@ -118,18 +118,8 @@ struct CalculatorBrain {
     
     func evaluate(using variables: Dictionary<String, Double>? = nil) -> (result: Double?, isPending: Bool, descripton: String) {
         var accumulator: (Double, String)?
-        //var calledEquals = false
-        //var calledBinaryOperation = false
-        //var temporaryMathOperationsTotal: Double?
         
         var pendingBinaryOperation: PendingBinaryOperation?
-        
-        /*var resultIsPending: Bool {
-            get {
-             return pendingBinaryOperation != nil
-             }
-        }*/
-        
         
         struct  PendingBinaryOperation {
             let function: (Double, Double) -> Double
@@ -165,35 +155,6 @@ struct CalculatorBrain {
             } else {
                 return accumulator?.1
             }
-
-            
-            /*get {
-                var stringToReturn: String?
-                
-                if accumlator?.1 == "C" {
-                    stringToReturn = nil
-                    accumlator = nil
-                }
-                else if resultIsPending && !calledEquals {
-                    if accumlator?.0 == temporaryMathOperationsTotal {
-                        stringToReturn = pendingBinaryOperation!.description(pendingBinaryOperation!.firstOperand.1, "")
-                    }
-                    else if accumlator?.1 == "π" {
-                        stringToReturn = pendingBinaryOperation!.description(pendingBinaryOperation!.firstOperand.1, (accumlator?.1)!)
-                    }
-                    else {
-                        stringToReturn = pendingBinaryOperation!.description(pendingBinaryOperation!.firstOperand.1, (accumlator?.1) ?? "")
-                    }
-                }
-                else if resultIsPending && calledEquals {
-                    stringToReturn = pendingBinaryOperation!.description(pendingBinaryOperation!.firstOperand.1, (accumlator?.1) ?? "")
-                }
-                else {
-                    stringToReturn = accumlator?.1
-                }
-                
-                return stringToReturn
-            }*/
         }
         
         for element in stackOfElementsInOperation {
@@ -216,22 +177,11 @@ struct CalculatorBrain {
                         if accumulator != nil {
                             
                             pendingBinaryOperation = PendingBinaryOperation(function: function, description: description, firstOperand: (accumulator!.0, accumulator!.1))
-                            //temporaryMathOperationsTotal = accumulator!.0
                             accumulator = nil
-                            //calledEquals = false
                             
                         }
-                        //When user removes last binary operation and decide to add a binary operation back
-                        /*else if (accumlator == nil) && calledEquals {
-                            if (temporaryMathOperationsTotal != nil) && (self.description != nil) {
-                                accumlator = (temporaryMathOperationsTotal!, self.description!)
-                                pendingBinaryOperation = PendingBinaryOperation(function: function, description: description, firstOperand: (accumlator!.0, accumlator!.1))
-                                calledEquals = false
-                            }
-                        }*/
                     case .equals:
                         performPendingBinaryOperation()
-                        //calledEquals = true
                     default:
                         break
                     }
