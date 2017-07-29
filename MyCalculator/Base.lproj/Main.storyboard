@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina5_5" orientation="portrait">
+    <device id="retina5_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,11 +18,11 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="r3m-d2-JBb">
-                                <rect key="frame" x="0.0" y="2" width="414" height="48"/>
+                                <rect key="frame" x="0.0" y="2" width="736" height="48"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="ovQ-oo-sBY"/>
@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="zml-H4-NcU">
-                                <rect key="frame" x="0.0" y="50" width="414" height="48"/>
+                                <rect key="frame" x="0.0" y="50" width="736" height="48"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="RVn-l4-yR1"/>
@@ -65,12 +65,12 @@
                                                 <color key="backgroundColor" red="1" green="0.9299700635" blue="0.04076129723" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                 <size key="titleShadowOffset" width="2" height="1"/>
-                                                <state key="normal" title="BC">
+                                                <state key="normal" title="CE">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="backSpace:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UQp-d2-bXK"/>
+                                                    <action selector="undo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ceU-Ls-r3r"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ck-aq-ng2">
@@ -543,12 +543,12 @@
                                                 <color key="backgroundColor" red="1" green="0.9299700635" blue="0.04076129723" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                 <size key="titleShadowOffset" width="2" height="1"/>
-                                                <state key="normal" title="BC">
+                                                <state key="normal" title="CE">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="backSpace:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mnd-c6-avr"/>
+                                                    <action selector="undo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pd2-ba-D2F"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2J-Tj-PRg">
@@ -943,6 +943,8 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="display" destination="zml-H4-NcU" id="Pcb-wR-J0S"/>
+                        <outlet property="memoryButtonLandscape" destination="OnV-D3-UCh" id="iCi-pC-CfD"/>
+                        <outlet property="memoryButtonPortrait" destination="Y09-kk-FOr" id="agj-Ej-Oji"/>
                         <outlet property="sequenceOfOperationsDisplay" destination="r3m-d2-JBb" id="JxL-E5-Ns2"/>
                     </connections>
                 </viewController>

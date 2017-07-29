@@ -95,31 +95,40 @@ struct CalculatorBrain {
        stackOfElementsInOperation.append(ElementInOperation.operation(symbol))
     }
     
+    mutating func undo() {
+        if !stackOfElementsInOperation.isEmpty {
+            stackOfElementsInOperation.removeLast()
+        }
+    }
+    
+    @available(*, deprecated, message: "no longer needed ...")
     var result: Double? {
             return evaluate().result
     }
     
+    @available(*, deprecated, message: "no longer needed ...")
     var resultIsPending: Bool {
         return evaluate().isPending
     }
     
+    @available(*, deprecated, message: "no longer needed ...")
     var description: String? {
         return evaluate().descripton
     }
     
     func evaluate(using variables: Dictionary<String, Double>? = nil) -> (result: Double?, isPending: Bool, descripton: String) {
-        var accumlator: (Double, String)?
-        var calledEquals = false
-        var calledBinaryOperation = false
-        var temporaryMathOperationsTotal: Double?
+        var accumulator: (Double, String)?
+        //var calledEquals = false
+        //var calledBinaryOperation = false
+        //var temporaryMathOperationsTotal: Double?
         
         var pendingBinaryOperation: PendingBinaryOperation?
         
-        var resultIsPending: Bool {
+        /*var resultIsPending: Bool {
             get {
              return pendingBinaryOperation != nil
              }
-        }
+        }*/
         
         
         struct  PendingBinaryOperation {
@@ -133,16 +142,16 @@ struct CalculatorBrain {
         }
         
         func performPendingBinaryOperation() {
-            if pendingBinaryOperation != nil && accumlator != nil {
-                accumlator = pendingBinaryOperation!.perform(with: (accumlator!))
+            if pendingBinaryOperation != nil && accumulator != nil {
+                accumulator = pendingBinaryOperation!.perform(with: (accumulator!))
                 pendingBinaryOperation = nil
             }
         }
         
         var result: Double? {
             get {
-                if accumlator != nil {
-                    return accumlator!.0
+                if accumulator != nil {
+                    return accumulator!.0
                 }
                 else {
                     return nil
@@ -151,7 +160,14 @@ struct CalculatorBrain {
         }
         
         var description: String? {
-            get {
+            if pendingBinaryOperation != nil {
+                return pendingBinaryOperation!.description(pendingBinaryOperation!.firstOperand.1, accumulator?.1 ?? "")
+            } else {
+                return accumulator?.1
+            }
+
+            
+            /*get {
                 var stringToReturn: String?
                 
                 if accumlator?.1 == "C" {
@@ -177,59 +193,59 @@ struct CalculatorBrain {
                 }
                 
                 return stringToReturn
-            }
+            }*/
         }
         
         for element in stackOfElementsInOperation {
             switch element {
             case .operand(let value):
-                accumlator = (value, CalculatorBrain.formatMyNumber(number: value)!)
+                accumulator = (value, CalculatorBrain.formatMyNumber(number: value)!)
             case .operation(let symbol):
                 if let operation = operations[symbol] {
                     switch operation {
                     case .constant(let value):
-                        accumlator = (value, symbol)
+                        accumulator = (value, symbol)
                     case .nullaryOperation(let randomNumberFunction, let descriptionOfRandomNumber):
-                        accumlator = (randomNumberFunction(), descriptionOfRandomNumber)
+                        accumulator = (randomNumberFunction(), descriptionOfRandomNumber)
                     case .unaryOperation(let function, let description):
-                        if accumlator != nil {
-                            accumlator = (function(accumlator!.0), description(accumlator!.1))
+                        if accumulator != nil {
+                            accumulator = (function(accumulator!.0), description(accumulator!.1))
                         }
                     case .binaryOperation(let function, let description):
                         performPendingBinaryOperation()
-                        if accumlator != nil {
+                        if accumulator != nil {
                             
-                            pendingBinaryOperation = PendingBinaryOperation(function: function, description: description, firstOperand: (accumlator!.0, accumlator!.1))
-                            temporaryMathOperationsTotal = accumlator!.0
-                            accumlator = nil
-                            calledEquals = false
+                            pendingBinaryOperation = PendingBinaryOperation(function: function, description: description, firstOperand: (accumulator!.0, accumulator!.1))
+                            //temporaryMathOperationsTotal = accumulator!.0
+                            accumulator = nil
+                            //calledEquals = false
                             
                         }
                         //When user removes last binary operation and decide to add a binary operation back
-                        else if (accumlator == nil) && calledEquals {
+                        /*else if (accumlator == nil) && calledEquals {
                             if (temporaryMathOperationsTotal != nil) && (self.description != nil) {
                                 accumlator = (temporaryMathOperationsTotal!, self.description!)
                                 pendingBinaryOperation = PendingBinaryOperation(function: function, description: description, firstOperand: (accumlator!.0, accumlator!.1))
                                 calledEquals = false
                             }
-                        }
+                        }*/
                     case .equals:
                         performPendingBinaryOperation()
-                        calledEquals = true
+                        //calledEquals = true
                     default:
                         break
                     }
                 }
             case .variable(let symbol):
                 if let value = variables?[symbol] {
-                    accumlator = (value, symbol)
+                    accumulator = (value, symbol)
                 }
                 else {
-                    accumlator = (0, symbol)
+                    accumulator = (0, symbol)
                 }
             }
         }
         
-        return (result, resultIsPending, description ?? "")
+        return (result, pendingBinaryOperation != nil, description ?? "")
     }
 }

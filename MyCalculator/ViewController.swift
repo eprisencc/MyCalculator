@@ -12,6 +12,9 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var sequenceOfOperationsDisplay: UILabel!
+    @IBOutlet weak var memoryButtonLandscape: UIButton!
+    @IBOutlet weak var memoryButtonPortrait: UIButton!
+    
     
     var userIsInTheMiddleOfTyping = false
     var haveADecimalPoint = false
@@ -99,12 +102,16 @@ class ViewController: UIViewController {
         variables = Dictionary<String, Double>()
         displayValue = 0
         sequenceOfOperationsDisplay.text = ""
+        memoryButtonPortrait.setTitle("M", for: .normal)
+        memoryButtonLandscape.setTitle("M", for: .normal)
     }
     
     var temporaryHoldForDisplay = ""
     
     @IBAction func storeToMemoryPressedDown(_ sender: UIButton) {
         variables = ["M": displayValue]
+        memoryButtonPortrait.setTitle("M=" + CalculatorBrain.formatMyNumber(number: displayValue)!, for: .normal)
+        memoryButtonLandscape.setTitle("M=" + CalculatorBrain.formatMyNumber(number: displayValue)!, for: .normal)
         temporaryHoldForDisplay = display.text ?? "0"
         displayResult()
         userIsInTheMiddleOfTyping = false
@@ -118,29 +125,27 @@ class ViewController: UIViewController {
     
     
     @IBAction func callMemory(_ sender: UIButton) {
-        calculatorBrain.setOperand(variable: sender.currentTitle!)
+        calculatorBrain.setOperand(variable: "M")
         userIsInTheMiddleOfTyping = false
         displayResult()
     }
     
-    @IBAction func backSpace(_ sender: UIButton) {
-        var textToBackSpace: String = display.text!
-        
-        //Only allow backspacing when zero is not in the display and the display is not showing the results
-        if textToBackSpace != "0" && !resultHasBeenDisplayed {
-            var charactersToBackSpace = Array(textToBackSpace.characters)
-            
-            if charactersToBackSpace.count > 1 {
-                charactersToBackSpace.removeLast()
-                textToBackSpace = String(charactersToBackSpace)
-            }
-            else {
-                textToBackSpace = "0"
+    @IBAction func undo(_ sender: UIButton) {
+        if userIsInTheMiddleOfTyping, var textOrElementToUndo = display.text {
+            var charactersToBackSpace = Array(textOrElementToUndo.characters)
+            charactersToBackSpace.removeLast()
+            textOrElementToUndo = String(charactersToBackSpace)
+            if textOrElementToUndo.isEmpty || textOrElementToUndo == "0" {
+                textOrElementToUndo = "0"
+                userIsInTheMiddleOfTyping = false
             }
             
+            display.text = textOrElementToUndo
         }
-        
-        display.text = textToBackSpace
+        else {
+            calculatorBrain.undo()
+            displayResult()
+        }
     }
 
     @IBAction func performOperation(_ sender: UIButton) {
