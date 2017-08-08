@@ -12,8 +12,8 @@ class CalculatorViewController: UIViewController {
     
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var sequenceOfOperationsDisplay: UILabel!
-    @IBOutlet weak var memoryButtonLandscape: UIButton!
     @IBOutlet weak var memoryButtonPortrait: UIButton!
+    @IBOutlet weak var memoryButtonEqualsDisplay: UILabel!
     
     
     var userIsInTheMiddleOfTyping = false
@@ -102,8 +102,9 @@ class CalculatorViewController: UIViewController {
         variables = Dictionary<String, Double>()
         displayValue = 0
         sequenceOfOperationsDisplay.text = ""
-        memoryButtonPortrait.setTitle("M", for: .normal)
-        memoryButtonLandscape.setTitle("M", for: .normal)
+        //memoryButtonPortrait.setTitle("M", for: .normal)
+        memoryButtonEqualsDisplay.text = "M=0"
+        //memoryButtonLandscape.setTitle("M", for: .normal)
     }
     
     var temporaryHoldForDisplay = ""
@@ -111,8 +112,9 @@ class CalculatorViewController: UIViewController {
     @IBAction func storeToMemoryPressedDown(_ sender: UIButton) {
         variables = ["M": displayValue]
         //variables?["M"] = displayValue
-        memoryButtonPortrait.setTitle("M=" + CalculatorBrain.formatMyNumber(number: displayValue)!, for: .normal)
-        memoryButtonLandscape.setTitle("M=" + CalculatorBrain.formatMyNumber(number: displayValue)!, for: .normal)
+        //memoryButtonPortrait.setTitle("M=" + CalculatorBrain.formatMyNumber(number: displayValue)!, for: .normal)
+        memoryButtonEqualsDisplay.text = "M=" + CalculatorBrain.formatMyNumber(number: displayValue)!
+        //memoryButtonLandscape.setTitle("M=" + CalculatorBrain.formatMyNumber(number: displayValue)!, for: .normal)
         temporaryHoldForDisplay = display.text ?? "0"
         displayResult()
         userIsInTheMiddleOfTyping = false
@@ -161,6 +163,46 @@ class CalculatorViewController: UIViewController {
         }
         
         displayResult()
+    }
+    
+    override func viewDidLoad() {
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard !calculatorBrain.evaluate(using: variables).isPending else {
+            return
+        }
+        variables = Dictionary<String, Double>()
+        
+        var destinationViewController = segue.destination
+        
+        if let navigationController = destinationViewController as? UINavigationController {
+            destinationViewController = navigationController.visibleViewController ?? destinationViewController
+        }
+        
+        if let graphViewController = destinationViewController as? GraphViewController, let identifier = segue.identifier {
+            if identifier == "graphFunction" {
+                graphViewController.graphView = GraphView()
+                graphViewController.functionToGraph = { (x: CGFloat) -> Double in
+                    self.variables?["M"] = Double(x)
+                    let evaluated = self.calculatorBrain.evaluate(using: self.variables)
+                    
+                    graphViewController.navigationItem.title = evaluated.descripton
+                    
+                    if (evaluated.result?.isNaN)! {
+                        return 0
+                    }
+                    else if let result = evaluated.result {
+                        return result
+                    }
+                    else {
+                        return 0
+                    }
+                }
+            }
+        }
     }
 }
 

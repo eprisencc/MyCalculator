@@ -9,7 +9,6 @@
 import Foundation
 
 struct CalculatorBrain {
-    
     private var stackOfElementsInOperation = [ElementInOperation]()
     
     private enum ElementInOperation {
@@ -32,8 +31,8 @@ struct CalculatorBrain {
     "e" : Operation.constant(M_E),
     
     "√" : Operation.unaryOperation(sqrt, { "√(" + $0 + ")" }),
-    "cos" : Operation.unaryOperation(cos, { "cos(" + $0 + ")" }),
-    "sin" : Operation.unaryOperation(sin, { "sin(" + $0 + ")" }),
+    "cs" : Operation.unaryOperation(cos, { "cos(" + $0 + ")" }),
+    "sn" : Operation.unaryOperation(sin, { "sin(" + $0 + ")" }),
     "tan" : Operation.unaryOperation(tan, { "tan(" + $0 + ")" }),
     "cosh" : Operation.unaryOperation(cosh, { "cosh(" + $0 + ")" }),
     "sinh" : Operation.unaryOperation(sinh, { "sinh(" + $0 + ")" }),
@@ -50,9 +49,9 @@ struct CalculatorBrain {
     "+" : Operation.binaryOperation(+, { $0 + "+" + $1 }),
     "−" : Operation.binaryOperation(-, { $0 + "-" + $1 }),
     "xʸ" : Operation.binaryOperation({ pow($0, $1) }, { $0 + "^" + $1 }),
-    "mod" : Operation.binaryOperation({ $0.truncatingRemainder(dividingBy: $1) }, { "(" + $0 + ")mod" + $1 }),
+    "md" : Operation.binaryOperation({ $0.truncatingRemainder(dividingBy: $1) }, { "(" + $0 + ")mod" + $1 }),
     
-    "rand" : Operation.nullaryOperation({ Double(arc4random()) / Double(UInt32.max) }, "rand()"),
+    "rd" : Operation.nullaryOperation({ Double(arc4random()) / Double(UInt32.max) }, "rand()"),
     
     "=" : Operation.equals
     ]
