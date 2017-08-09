@@ -68,9 +68,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Uz-xI-Lup">
                                                 <rect key="frame" x="80.666666666666657" y="0.0" width="70.999999999999972" height="87.333333333333343"/>
                                                 <color key="backgroundColor" red="0.93312823830000002" green="0.86709735639999996" blue="0.031492830880000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                 <size key="titleShadowOffset" width="2" height="1"/>
-                                                <state key="normal" title="CE">
+                                                <state key="normal" title="↵">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </state>
@@ -124,8 +124,7 @@
                                                 <rect key="frame" x="323.33333333333326" y="0.0" width="70.666666666666686" height="87.333333333333343"/>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                <size key="titleShadowOffset" width="2" height="1"/>
-                                                <state key="normal" title="📈">
+                                                <state key="normal" title="🚫">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </state>
@@ -610,16 +609,16 @@
                         <constraints>
                             <constraint firstItem="r3m-d2-JBb" firstAttribute="trailing" secondItem="zml-H4-NcU" secondAttribute="trailing" id="2xP-Av-UeA"/>
                             <constraint firstItem="s3L-Th-iE6" firstAttribute="baseline" secondItem="r3m-d2-JBb" secondAttribute="baseline" id="4C3-md-Ih7"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="kSq-wD-SMM" secondAttribute="bottom" constant="10" id="Liv-wq-X9z"/>
+                            <constraint firstItem="r3m-d2-JBb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="2" id="CQV-Gm-UZu"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="kSq-wD-SMM" secondAttribute="bottom" constant="10" id="HbS-ki-ytr"/>
                             <constraint firstItem="kSq-wD-SMM" firstAttribute="top" secondItem="zml-H4-NcU" secondAttribute="bottom" constant="10" id="Prv-b3-Ld0"/>
                             <constraint firstItem="kSq-wD-SMM" firstAttribute="leading" secondItem="zml-H4-NcU" secondAttribute="leading" constant="10" id="Wpb-bN-jWp"/>
                             <constraint firstAttribute="trailing" secondItem="zml-H4-NcU" secondAttribute="trailing" id="YFd-A3-vdO"/>
                             <constraint firstItem="kSq-wD-SMM" firstAttribute="trailing" secondItem="zml-H4-NcU" secondAttribute="trailing" constant="-10" id="Yeo-bO-fjz"/>
                             <constraint firstItem="r3m-d2-JBb" firstAttribute="leading" secondItem="s3L-Th-iE6" secondAttribute="trailing" id="aSq-qY-961"/>
-                            <constraint firstItem="s3L-Th-iE6" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="3" id="d1t-ue-1cd"/>
+                            <constraint firstItem="s3L-Th-iE6" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="3" id="hw9-nT-tJv"/>
                             <constraint firstItem="zml-H4-NcU" firstAttribute="top" secondItem="r3m-d2-JBb" secondAttribute="bottom" id="j6A-FD-yQ1"/>
                             <constraint firstItem="s3L-Th-iE6" firstAttribute="leading" secondItem="kSq-wD-SMM" secondAttribute="leading" id="j7B-w2-c1h"/>
-                            <constraint firstItem="r3m-d2-JBb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="2" id="pAm-K2-lk2"/>
                             <constraint firstItem="zml-H4-NcU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vmA-bh-Uuo"/>
                         </constraints>
                     </view>
@@ -627,6 +626,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="display" destination="zml-H4-NcU" id="Pcb-wR-J0S"/>
+                        <outlet property="graphingButton" destination="c1T-nb-Btb" id="dHN-KT-xkK"/>
                         <outlet property="memoryButtonEqualsDisplay" destination="s3L-Th-iE6" id="ZQj-5K-Sg9"/>
                         <outlet property="memoryButtonPortrait" destination="Y09-kk-FOr" id="agj-Ej-Oji"/>
                         <outlet property="sequenceOfOperationsDisplay" destination="r3m-d2-JBb" id="JxL-E5-Ns2"/>

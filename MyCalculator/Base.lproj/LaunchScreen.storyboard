@@ -20,12 +20,28 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Calculator_clipped_rev_1" translatesAutoresizingMaskIntoConstraints="NO" id="VoM-X2-X0Z">
+                                <rect key="frame" x="47" y="221" width="320" height="294"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="6Uz-gq-6MX"/>
+                                    <constraint firstAttribute="height" constant="294" id="hIB-cv-0DV"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VoM-X2-X0Z" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ZdE-rA-xbB"/>
+                            <constraint firstItem="VoM-X2-X0Z" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="zht-yu-qZD"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="50.724637681159422" y="373.36956521739131"/>
+            <point key="canvasLocation" x="50.625" y="372.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Calculator_clipped_rev_1" width="1996" height="2101"/>
+    </resources>
 </document>

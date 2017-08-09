@@ -11,6 +11,12 @@ import Foundation
 struct CalculatorBrain {
     private var stackOfElementsInOperation = [ElementInOperation]()
     
+    private let defaults = UserDefaults.standard
+    
+    /*init() {
+        stackOfElementsInOperation = (defaults.array(forKey: "stackOfElementsInOperation") as? [ElementInOperation]) ?? []
+    }*/
+    
     private enum ElementInOperation {
         case operation(String)
         case operand(Double)
@@ -82,20 +88,25 @@ struct CalculatorBrain {
     
     mutating func setOperand(_ operand: Double) {
         stackOfElementsInOperation.append(ElementInOperation.operand(operand))
+        //defaults.set(stackOfElementsInOperation, forKey: "stackOfElementsInOperation")
+        
     }
     
     mutating func setOperand(variable named: String) {
         stackOfElementsInOperation.append(ElementInOperation.variable(named))
+        //defaults.set(stackOfElementsInOperation, forKey: "stackOfElementsInOperation")
     }
     
     mutating func performOperation(_ symbol: String) {
        stackOfElementsInOperation.append(ElementInOperation.operation(symbol))
+            //defaults.set(stackOfElementsInOperation, forKey: "stackOfElementsInOperation")
     }
     
     mutating func undo() {
         if !stackOfElementsInOperation.isEmpty {
             stackOfElementsInOperation.removeLast()
         }
+            //defaults.set(stackOfElementsInOperation, forKey: "stackOfElementsInOperation")
     }
     
     @available(*, deprecated, message: "no longer needed ...")

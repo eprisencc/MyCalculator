@@ -14,13 +14,14 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var sequenceOfOperationsDisplay: UILabel!
     @IBOutlet weak var memoryButtonPortrait: UIButton!
     @IBOutlet weak var memoryButtonEqualsDisplay: UILabel!
-    
+    @IBOutlet weak var graphingButton: UIButton!
     
     var userIsInTheMiddleOfTyping = false
     var haveADecimalPoint = false
     var resultHasBeenDisplayed = false
     private var calculatorBrain = CalculatorBrain()
     private var variables: Dictionary<String, Double>?
+    //let defaults = UserDefaults.standard
     
     var displayValue: Double {
         get {
@@ -76,6 +77,7 @@ class CalculatorViewController: UIViewController {
                 display.text = digit
             }
         }
+        //checkIfICanGraph()
     }
     
     private func displayResult() {
@@ -84,6 +86,7 @@ class CalculatorViewController: UIViewController {
         if let result = evaluated.result {
             displayValue = result
             resultHasBeenDisplayed = true
+            //defaults.set(sequenceOfOperationsDisplay.text, forKey: "sequenceOfOperationsDisplay")
         }
         
         if evaluated.descripton != "" {
@@ -102,23 +105,20 @@ class CalculatorViewController: UIViewController {
         variables = Dictionary<String, Double>()
         displayValue = 0
         sequenceOfOperationsDisplay.text = ""
-        //memoryButtonPortrait.setTitle("M", for: .normal)
         memoryButtonEqualsDisplay.text = "M=0"
-        //memoryButtonLandscape.setTitle("M", for: .normal)
+        checkIfICanGraph()
     }
     
     var temporaryHoldForDisplay = ""
     
     @IBAction func storeToMemoryPressedDown(_ sender: UIButton) {
         variables = ["M": displayValue]
-        //variables?["M"] = displayValue
-        //memoryButtonPortrait.setTitle("M=" + CalculatorBrain.formatMyNumber(number: displayValue)!, for: .normal)
         memoryButtonEqualsDisplay.text = "M=" + CalculatorBrain.formatMyNumber(number: displayValue)!
-        //memoryButtonLandscape.setTitle("M=" + CalculatorBrain.formatMyNumber(number: displayValue)!, for: .normal)
         temporaryHoldForDisplay = display.text ?? "0"
         displayResult()
         userIsInTheMiddleOfTyping = false
         display.text = "STORED"
+        checkIfICanGraph()
     }
     
     @IBAction func storeToMemoryNoLongerPressed(_ sender: UIButton) {
@@ -131,6 +131,16 @@ class CalculatorViewController: UIViewController {
         calculatorBrain.setOperand(variable: "M")
         userIsInTheMiddleOfTyping = false
         displayResult()
+        checkIfICanGraph()
+    }
+    
+    func checkIfICanGraph() {
+        if calculatorBrain.evaluate(using: variables).isPending || calculatorBrain.evaluate(using: variables).descripton.isEmpty {
+            graphingButton.setTitle("🚫", for: .normal)
+        }
+        else {
+            graphingButton.setTitle("📈", for: .normal)
+        }
     }
     
     @IBAction func undo(_ sender: UIButton) {
@@ -149,6 +159,7 @@ class CalculatorViewController: UIViewController {
             calculatorBrain.undo()
             displayResult()
         }
+        checkIfICanGraph()
     }
 
     @IBAction func performOperation(_ sender: UIButton) {
@@ -163,11 +174,14 @@ class CalculatorViewController: UIViewController {
         }
         
         displayResult()
+        checkIfICanGraph()
     }
     
     override func viewDidLoad() {
         self.navigationController?.navigationBar.barTintColor = UIColor.black
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        //sequenceOfOperationsDisplay.text = defaults.string(forKey: "sequenceOfOperationsDisplay")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -192,10 +206,7 @@ class CalculatorViewController: UIViewController {
                     
                     graphViewController.navigationItem.title = evaluated.descripton
                     
-                    /*if (evaluated.result?.isNaN)! {
-                     return 0
-                     }
-                     else */if let result = evaluated.result {
+                    if let result = evaluated.result {
                         return result
                      }
                      else {
