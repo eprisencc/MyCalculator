@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD0E02EC1F3A64280083FA6F /* GlobalSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0E02EB1F3A64280083FA6F /* GlobalSplitViewController.swift */; };
 		DD9E85BE1F242F31004BB3A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9E85BD1F242F31004BB3A2 /* AppDelegate.swift */; };
 		DD9E85C01F242F31004BB3A2 /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9E85BF1F242F31004BB3A2 /* CalculatorViewController.swift */; };
 		DD9E85C31F242F31004BB3A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD9E85C11F242F31004BB3A2 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD0E02EB1F3A64280083FA6F /* GlobalSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalSplitViewController.swift; sourceTree = "<group>"; };
 		DD9E85BA1F242F31004BB3A2 /* MyCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD9E85BD1F242F31004BB3A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD9E85BF1F242F31004BB3A2 /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 			children = (
 				DD9E85C11F242F31004BB3A2 /* Main.storyboard */,
 				DD9E85BD1F242F31004BB3A2 /* AppDelegate.swift */,
+				DD0E02EB1F3A64280083FA6F /* GlobalSplitViewController.swift */,
 				DD9E85BF1F242F31004BB3A2 /* CalculatorViewController.swift */,
 				DD9E85CF1F242FA0004BB3A2 /* CalculatorBrain.swift */,
 				DDD257BF1F38EFED006A44E2 /* GraphViewController.swift */,
@@ -157,6 +160,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD0E02EC1F3A64280083FA6F /* GlobalSplitViewController.swift in Sources */,
 				DDD257C31F38F003006A44E2 /* GraphView.swift in Sources */,
 				DD9E85D01F242FA0004BB3A2 /* CalculatorBrain.swift in Sources */,
 				DDD257C01F38EFED006A44E2 /* GraphViewController.swift in Sources */,

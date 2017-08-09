@@ -30,16 +30,16 @@ class GraphView: UIView {
     }
     
     @IBInspectable
-    var origin: CGPoint? { didSet{ setNeedsDisplay() } }
+    var origin: CGPoint? /*{ didSet{ setNeedsDisplay() } }*/
     
     @IBInspectable
-    var scale: CGFloat = 50 { didSet{ setNeedsDisplay() } }
+    var scale: CGFloat = 50 /*{ didSet{ setNeedsDisplay() } }*/
     
     @IBInspectable
     var lineWidth: CGFloat = 3 { didSet{ setNeedsDisplay() } }
     
     @IBInspectable
-    var color: UIColor = UIColor.white { didSet{ setNeedsDisplay() } }
+    var color: UIColor = UIColor.orange { didSet{ setNeedsDisplay() } }
     
     override func draw(_ rect: CGRect) {
         if origin == nil {
@@ -66,34 +66,16 @@ class GraphView: UIView {
             pointTranslated.x = ((CGFloat(pixel) / scale) - (origin?.x)!) / scale
             pointTranslated.y = myData.getYCoordinate(x: pointTranslated.x)
             
-            /* if pointTranslated.x < 0 {
-                print("x is \(pointTranslated.x) and y is \(pointTranslated.y)")
-            }*/
-            
-            if -pointTranslated.x == pointTranslated.y {
-                print("For the line x = -y then x is \(pointTranslated.x) and y is \(pointTranslated.y)")
-            }
-            
             if pointTranslated.y.isNaN {
-                pointOnNormalAxes = CGPoint.zero
+                pointOnNormalAxes = origin!
             }
             else {
-                /* if pointTranslated.x < 0 {
-                    print("Point on normal axes was called for translated x less than 0")
-                }*/
+
                 pointOnNormalAxes.x = CGFloat(pixel) / scale
                 pointOnNormalAxes.y = (origin?.y)! - pointTranslated.y * scale
 
             }
-            
-            /* if !pointTranslated.y.isNormal && !pointTranslated.y.isZero {
-                pathStarted = false
-            }*/
 
-            /* if pointTranslated.x < 0 && pointTranslated.y > 0 {
-                print("Did this situation happen?")
-            }*/
-            
             if !pathStarted {
                 path.move(to: pointOnNormalAxes)
                 pathStarted = true
@@ -109,11 +91,17 @@ class GraphView: UIView {
     
     func moveOrigin(byReactingTo panRecognizer: UIPanGestureRecognizer) {
         switch panRecognizer.state {
-        case .changed, .ended:
+        case .changed:
             let translation = panRecognizer.translation(in: self)
             origin?.x += translation.x
             origin?.y += translation.y
             panRecognizer.setTranslation(CGPoint.zero, in: self)
+        case .ended:
+            let translation = panRecognizer.translation(in: self)
+            origin?.x += translation.x
+            origin?.y += translation.y
+            panRecognizer.setTranslation(CGPoint.zero, in: self)
+            setNeedsDisplay()
         default:
             break
         }
@@ -121,9 +109,13 @@ class GraphView: UIView {
     
     func changeScale(byReactingTo pinchRecognizer: UIPinchGestureRecognizer) {
         switch pinchRecognizer.state {
-        case .changed, .ended:
+        case .changed:
             scale *= pinchRecognizer.scale
             pinchRecognizer.scale = 1
+        case .ended:
+            scale *= pinchRecognizer.scale
+            pinchRecognizer.scale = 1
+            setNeedsDisplay()
         default:
             break
         }
@@ -132,6 +124,7 @@ class GraphView: UIView {
     func doubleTap(byReactingTo tapRecognizer: UITapGestureRecognizer) {
         if tapRecognizer.state == .ended {
             origin = tapRecognizer.location(in: self)
+            setNeedsDisplay()
         }
     }
 

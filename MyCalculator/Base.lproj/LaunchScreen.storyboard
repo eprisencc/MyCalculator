@@ -20,27 +20,7 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calculator_launch_screen" translatesAutoresizingMaskIntoConstraints="NO" id="Lqo-8y-0mk">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label to cover battery symbol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgV-6N-guH">
-                                <rect key="frame" x="176" y="0.0" width="227" height="21"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="hgV-6N-guH" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="3Wk-hm-Jeu"/>
-                            <constraint firstItem="Lqo-8y-0mk" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="EAr-Rs-IrW"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Lqo-8y-0mk" secondAttribute="bottom" id="MjC-9D-0uE"/>
-                            <constraint firstAttribute="trailing" secondItem="Lqo-8y-0mk" secondAttribute="trailing" id="YZ9-Lj-5p2"/>
-                            <constraint firstAttribute="trailing" secondItem="hgV-6N-guH" secondAttribute="trailing" constant="11" id="oMM-BC-Zaj"/>
-                            <constraint firstItem="Lqo-8y-0mk" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="oSZ-In-yTT"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -48,7 +28,4 @@
             <point key="canvasLocation" x="50.724637681159422" y="373.36956521739131"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="calculator_launch_screen" width="1242" height="2208"/>
-    </resources>
 </document>

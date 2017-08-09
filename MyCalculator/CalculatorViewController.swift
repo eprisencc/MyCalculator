@@ -174,6 +174,7 @@ class CalculatorViewController: UIViewController {
         guard !calculatorBrain.evaluate(using: variables).isPending else {
             return
         }
+        
         variables = Dictionary<String, Double>()
         
         var destinationViewController = segue.destination
@@ -191,18 +192,19 @@ class CalculatorViewController: UIViewController {
                     
                     graphViewController.navigationItem.title = evaluated.descripton
                     
-                    if (evaluated.result?.isNaN)! {
-                        return 0
-                    }
-                    else if let result = evaluated.result {
+                    /*if (evaluated.result?.isNaN)! {
+                     return 0
+                     }
+                     else */if let result = evaluated.result {
                         return result
-                    }
-                    else {
+                     }
+                     else {
                         return 0
                     }
                 }
             }
         }
+
     }
 }
 
