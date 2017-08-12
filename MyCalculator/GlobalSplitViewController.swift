@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+//This class sole purpose is to subclass the split view controller so the CalculatorViewController will show by default.
 class GlobalSplitViewController: UISplitViewController, UISplitViewControllerDelegate {
     
     override func viewDidLoad() {
